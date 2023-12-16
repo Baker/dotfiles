@@ -1,0 +1,37 @@
+export ZPLUG_HOME=~/.zplug
+source $ZPLUG_HOME/init.zsh
+
+# Theme
+zplug "romkatv/powerlevel10k", as:theme, depth:1
+
+# Completions
+zplug "zsh-users/zsh-completions"
+
+# Plugins
+zplug "b4b4r07/enhancd", use:init.sh
+
+
+# oh-my-zsh plugins
+zplug "plugins/git", from:oh-my-zsh
+zplug "plugins/docker", from:oh-my-zsh
+zplug "plugins/pip", from:oh-my-zsh
+zplug "plugins/pipenv", from:oh-my-zsh
+zplug "plugins/python", from:oh-my-zsh
+zplug "plugins/virtualenv", from:oh-my-zsh
+zplug "plugins/virtualenvwrapper", from:oh-my-zsh
+zplug "plugins/nvm", from:oh-my-zsh
+zplug "plugins/kubectl", from:oh-my-zsh
+zplug "plugins/1password", from:oh-my-zsh
+zplug "plugins/safe-paste", from:oh-my-zsh
+zplug "plugins/command-not-found", from:oh-my-zsh
+zplug "plugins/ripgrep", from:oh-my-zsh
+
+# Deferred plugins
+zplug "zsh-users/zsh-autosuggestions", defer:2
+zplug "zsh-users/zsh-syntax-highlighting", defer:2
+zplug "zsh-users/zsh-history-substring-search", defer:2
+
+zplug load
+if ! zplug check; then
+    zplug install
+fi

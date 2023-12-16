@@ -1,0 +1,207 @@
+#!/bin/sh
+DOTFILES="$(pwd)"
+COLOR_GRAY="\033[1;38;5;243m"
+COLOR_BLUE="\033[1;34m"
+COLOR_GREEN="\033[1;32m"
+COLOR_RED="\033[1;31m"
+COLOR_PURPLE="\033[1;35m"
+COLOR_YELLOW="\033[1;33m"
+COLOR_NONE="\033[0m"
+newline=$'\n'
+
+title() {
+    echo "\n${COLOR_PURPLE}$1${COLOR_NONE}"
+    echo "${COLOR_GRAY}==============================${COLOR_NONE}\n"
+}
+
+error() {
+    echo "${COLOR_RED}Error: ${COLOR_NONE}$1"
+}
+
+warning() {
+    echo "${COLOR_YELLOW}Warning: ${COLOR_NONE}$1"
+}
+
+info() {
+    echo "${COLOR_BLUE}Info: ${COLOR_NONE}$1"
+}
+
+success() {
+    echo "${COLOR_GREEN}$1${COLOR_NONE}"
+}
+
+install() {
+    if [ "$(uname)" = "Darwin" ]; then
+        info "MacOS detected"
+        brew install $1
+    elif [ "$(uname)" = "Linux" ]; then
+        info "Linux detected"
+        if [ -n "$2" ]; then
+            sudo apt install "$2"
+        else
+            sudo apt install "$1"
+        fi
+    fi
+}
+
+linux() {
+    if [ "$(uname)" = "Linux" ]; then
+        sudo apt install $1
+    fi
+}
+
+mac() {
+    if [ "$(uname)" = "Darwin" ]; then
+        brew install $1
+    fi
+}
+
+check_dependencies() {
+    local utils=(git curl pip python3 zsh rg fzf)
+    local dir_utils=(nvm zplug)
+    local missing_apps=0
+    title "Checking for installed apps"
+    for util in "${utils[@]}"; do
+        printf %s "Checking $util... "
+
+        if test "$(command -v "$util")"; then
+            success "Installed."
+        else
+            error "Not installed."
+            missing_apps=$((missing_apps+1))
+        fi
+    done
+
+    for util in "${dir_utils[@]}"; do
+        printf %s "Checking $util... "
+
+        if [ -d "$HOME/.$util" ]; then
+            success "Installed."
+        else
+            error "Not installed."
+            missing_apps=$((missing_apps+1))
+        fi
+    done
+
+    if [ "$missing_apps" -gt 0 ]; then
+        error "Missing required utilities. Run make install-deps."
+        exit 1
+    fi
+}
+
+install_dependencies() {
+    title "Installing dependencies"
+
+    if test "$(command -v "git")"; then
+        success "Git is already installed."
+    else
+        warning "Git is not installed."
+        info "Installing Git..."
+        install git
+        success "Git installed."
+    fi
+
+    if test "$(command -v "curl")"; then
+        success "curl is already installed."
+    else
+        warning "curl is not installed."
+        info "Installing curl..."
+        install curl
+        success "curl installed."
+    fi
+
+    if [ -d "$HOME/.nvm" ]; then
+        success "nvm is already installed."
+    else
+        warning "nvm is not installed."
+        info "Installing nvm..."
+        curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
+        success "nvm installed."
+    fi
+
+    if test "$(command -v "python3")"; then
+        success "python is already installed."
+    else
+        warning "python is not installed."
+        info "Installing python..."
+        install python python3
+        success "python3 installed."
+    fi
+
+    if test "$(command -v "pip")"; then
+        success "pip is already installed."
+    else
+        warning "pip is not installed."
+        info "Installing pip..."
+        linux python3-pip
+        success "pip installed."
+    fi
+
+    if test "$(command -v "zsh")"; then
+        success "zsh is already installed."
+    else
+        warning "zsh is not installed."
+        info "Installing zsh..."
+        install zsh
+        success "zsh installed."
+    fi
+
+    if test "$(command -v "rg")"; then
+        success "ripgrep is already installed."
+    else
+        warning "ripgrep is not installed."
+        info "Installing ripgrep..."
+        install ripgrep
+        success "ripgrep installed."
+    fi
+
+    if test "$(command -v "fzf")"; then
+        success "fzf is already installed."
+    else
+        warning "fzf is not installed."
+        info "Installing fzf..."
+        install fzf
+        success "fzf installed."
+    fi
+
+    if [ -d "$HOME/.zplug" ]; then
+        success "zplug is already installed."
+    else
+        warning "zplug is not installed."
+        info "Installing zplug..."
+        curl -sL --proto-redir -all,https https://raw.githubusercontent.com/zplug/installer/master/installer.zsh | zsh
+        success "zplug installed."
+    fi
+}
+
+backup_shell() {
+    title "Backing up Shell.."
+    BACKUP_DIR=$HOME/dotfiles-backup
+
+    info "Creating backup directory at $BACKUP_DIR"
+    mkdir -p "$BACKUP_DIR"
+    info "Attempting to backup existing zsh config files"
+    mv ~/.zshrc "$BACKUP_DIR/.zshrc.backup"
+    mv ~/.zshenv "$BACKUP_DIR/.zshenv.backup"
+    mv ~/.zprofile "$BACKUP_DIR/.zprofile.backup"
+    mv ~/.zlogin "$BACKUP_DIR/.zlogin.backup"
+    success "Backup complete!"
+}
+
+setup_shell() {
+    title "Setting up Shell.."
+    touch ~/.zshenv
+    echo "export ZDOTDIR=$DOTFILES/shell" >> ~/.zshenv
+    success "Setup complete!"
+}
+
+remove_shell() {
+    title "Removing Shell.."
+    rm -rf ~/.zshenv
+    rm -rf ~/.zshrc
+    rm -rf ~/.zprofile
+    rm -rf ~/.zlogin
+    success "Removed shell configuration!"
+}
+
+"$@"

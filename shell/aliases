@@ -1,0 +1,10 @@
+# Navigation
+alias ..="cd .."
+
+# Time management
+alias week='date +%V'
+alias timer='echo "Timer started. Stop with CTRL-D." && date && time cat && date'
+
+# Generic aliases
+alias python=python3
+alias pip=pip3
