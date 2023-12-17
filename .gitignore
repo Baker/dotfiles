@@ -1,3 +1,6 @@
 .zcompdump
-shell/work
 *.log
+
+shell/work
+backup
+dotfiles

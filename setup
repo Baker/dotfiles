@@ -207,6 +207,8 @@ setup_shell() {
     title "Setting up Shell.."
     touch ~/.zshenv
     echo "export ZDOTDIR=$DOTFILES/shell" >> ~/.zshenv
+    ln -s $DOTFILES ~/.dotfiles
+    info "Created symlink to $(pwd) at ~/.dotfiles"
     success "Setup complete!"
 }
 
@@ -214,8 +216,6 @@ remove_shell() {
     title "Removing Shell.."
     rm -rf ~/.zshenv
     rm -rf ~/.zshrc
-    rm -rf ~/.zprofile
-    rm -rf ~/.zlogin
     success "Removed shell configuration!"
 }
 
