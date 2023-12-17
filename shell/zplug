@@ -11,20 +11,27 @@ zplug "zsh-users/zsh-completions"
 zplug "b4b4r07/enhancd", use:init.sh
 
 
-# oh-my-zsh plugins
+# oh-my-zsh utils plugins
+zplug "plugins/1password", from:oh-my-zsh
+zplug "plugins/safe-paste", from:oh-my-zsh
+zplug "plugins/command-not-found", from:oh-my-zsh
+zplug "plugins/ripgrep", from:oh-my-zsh
+zplug "plugins/history", from:oh-my-zsh
+zplug "plugins/copyfile", from:oh-my-zsh
+
+# oh-my-zsh infrastrucutre plugins
 zplug "plugins/git", from:oh-my-zsh
 zplug "plugins/docker", from:oh-my-zsh
+zplug "plugins/kubectl", from:oh-my-zsh
+
+# oh-my-zsh langauge plugins
 zplug "plugins/pip", from:oh-my-zsh
 zplug "plugins/pipenv", from:oh-my-zsh
 zplug "plugins/python", from:oh-my-zsh
 zplug "plugins/virtualenv", from:oh-my-zsh
 zplug "plugins/virtualenvwrapper", from:oh-my-zsh
 zplug "plugins/nvm", from:oh-my-zsh
-zplug "plugins/kubectl", from:oh-my-zsh
-zplug "plugins/1password", from:oh-my-zsh
-zplug "plugins/safe-paste", from:oh-my-zsh
-zplug "plugins/command-not-found", from:oh-my-zsh
-zplug "plugins/ripgrep", from:oh-my-zsh
+
 
 # Deferred plugins
 zplug "zsh-users/zsh-autosuggestions", defer:2

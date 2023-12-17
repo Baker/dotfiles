@@ -59,6 +59,10 @@ setup-shell                    This sets up the shell config by pointing the she
 
 4. Now it's time to setup the shell, this is easy. Run `make setup-shell`, this will setup a new `zshenv` file that points the envirnoment to the `dotfiles/shell` folder.
 
+### Colors
+
+I try and use the `Ayu` colors where I can. <https://github.com/ayu-theme/ayu-colors>
+
 ## Issues
 
 I have an ongoing file with common issues I have encountered that I want to document for myself later. You can view these in the [COMMON.md](./COMMON.md).
