@@ -1,5 +1,6 @@
 #!/bin/sh
 DOTFILES="$(pwd)"
+LOG_FILE="$DOTFILES/install.log"
 COLOR_GRAY="\033[1;38;5;243m"
 COLOR_BLUE="\033[1;34m"
 COLOR_GREEN="\033[1;32m"
@@ -10,65 +11,70 @@ COLOR_NONE="\033[0m"
 newline=$'\n'
 
 title() {
-    echo "\n${COLOR_PURPLE}$1${COLOR_NONE}"
-    echo "${COLOR_GRAY}==============================${COLOR_NONE}\n"
+    echo "${COLOR_PURPLE}$1${COLOR_NONE}"
 }
 
 error() {
-    echo "${COLOR_RED}Error: ${COLOR_NONE}$1"
-}
-
-warning() {
-    echo "${COLOR_YELLOW}Warning: ${COLOR_NONE}$1"
-}
-
-info() {
-    echo "${COLOR_BLUE}Info: ${COLOR_NONE}$1"
+    echo "${COLOR_RED}ERROR: ${COLOR_NONE}$1"
 }
 
 success() {
+    echo "${COLOR_GREEN}SUCCESS: ${COLOR_NONE} $1"
+}
+
+warning() {
+    echo "${COLOR_YELLOW}WARNING: ${COLOR_NONE}$1"
+}
+
+info() {
+    echo "${COLOR_BLUE}INFO: ${COLOR_NONE}$1"
+}
+
+error_message() {
+    echo "${COLOR_RED}$1${COLOR_NONE}"
+}
+
+success_message() {
     echo "${COLOR_GREEN}$1${COLOR_NONE}"
 }
 
 install() {
     if [ "$(uname)" = "Darwin" ]; then
         info "MacOS detected"
-        brew install $1
+        brew install $1 >> $LOG_FILE
     elif [ "$(uname)" = "Linux" ]; then
         info "Linux detected"
         if [ -n "$2" ]; then
-            sudo apt install "$2"
+            sudo apt install "$2" >> $LOG_FILE
         else
-            sudo apt install "$1"
+            sudo apt install "$1" >> $LOG_FILE
         fi
     fi
 }
 
 linux() {
     if [ "$(uname)" = "Linux" ]; then
-        sudo apt install $1
+        sudo apt install $1 >> $LOG_FILE
     fi
 }
 
 mac() {
     if [ "$(uname)" = "Darwin" ]; then
-        brew install $1
+        brew install $1 >> $LOG_FILE
     fi
 }
 
 check_dependencies() {
-    local utils=(git curl pip python3 zsh rg fzf)
+    local utils=(git curl pip python3 zsh rg fzf pnpm)
     local dir_utils=(nvm zplug)
-    local missing_apps=0
     title "Checking for installed apps"
     for util in "${utils[@]}"; do
         printf %s "Checking $util... "
 
         if test "$(command -v "$util")"; then
-            success "Installed."
+            success_message "Installed."
         else
-            error "Not installed."
-            missing_apps=$((missing_apps+1))
+            error_message "Not installed."
         fi
     done
 
@@ -76,17 +82,11 @@ check_dependencies() {
         printf %s "Checking $util... "
 
         if [ -d "$HOME/.$util" ]; then
-            success "Installed."
+            success_message "Installed."
         else
-            error "Not installed."
-            missing_apps=$((missing_apps+1))
+            error_message "Not installed."
         fi
     done
-
-    if [ "$missing_apps" -gt 0 ]; then
-        error "Missing required utilities. Run make install-deps."
-        exit 1
-    fi
 }
 
 install_dependencies() {
@@ -115,8 +115,21 @@ install_dependencies() {
     else
         warning "nvm is not installed."
         info "Installing nvm..."
-        curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
-        success "nvm installed."
+        curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh >> $LOG_FILE | bash >> $LOG_FILE
+        info "nvm installed, setting it up..."
+        nvm ls-remote >> $LOG_FILE
+        nvm install --lts >> $LOG_FILE
+        nvm use --lts >> $LOG_FILE
+        success "nvm is installed and configured to use the latest LTS version."
+    fi
+
+    if test "$(command -v "pnpm")"; then
+        success "pnpm is already installed."
+    else
+        warning "pnpm is not installed."
+        info "Installing pnpm..."
+        npm install -g pnpm >> $LOG_FILE
+        success "pnpm installed."
     fi
 
     if test "$(command -v "python3")"; then
@@ -169,9 +182,11 @@ install_dependencies() {
     else
         warning "zplug is not installed."
         info "Installing zplug..."
-        curl -sL --proto-redir -all,https https://raw.githubusercontent.com/zplug/installer/master/installer.zsh | zsh
+        curl -sL --proto-redir -all,https https://raw.githubusercontent.com/zplug/installer/master/installer.zsh  >> $LOG_FILE | zsh >> $LOG_FILE
         success "zplug installed."
     fi
+
+    info "All logs are saved to $LOG_FILE"
 }
 
 backup_shell() {
