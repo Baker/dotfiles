@@ -10,6 +10,10 @@ zplug "zsh-users/zsh-completions"
 # Plugins
 zplug "b4b4r07/enhancd", use:init.sh
 
+#MacOS
+if [[ "$(uname)" == "Darwin" ]]; then
+    zplug "plugins/macos", from:oh-my-zsh
+fi
 
 # oh-my-zsh utils plugins
 zplug "plugins/1password", from:oh-my-zsh

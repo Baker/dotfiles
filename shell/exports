@@ -1,5 +1,4 @@
 export VIRTUALENVWRAPPER_PYTHON=$(which python3)
-export PYENV_ROOT=${PYENV_ROOT:-~/.pyenv/}
 
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm

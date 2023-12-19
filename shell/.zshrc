@@ -10,11 +10,11 @@ autoload -U compinit && compinit
 ZDIR=$HOME/.dotfiles/shell
 
 source $ZDIR/zplug
+source $ZDIR/exports
 source $ZDIR/history
 source $ZDIR/work
 source $ZDIR/aliases
 source $ZDIR/functions
-source $ZDIR/exports
 
 # To customize prompt, run `p10k configure` or edit $ZDIR/.p10k.zsh.
 [[ ! -f $ZDIR/.p10k.zsh ]] || source $ZDIR/.p10k.zsh
