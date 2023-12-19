@@ -206,7 +206,7 @@ backup_shell() {
 setup_shell() {
     title "Setting up Shell.."
     touch ~/.zshenv
-    echo "export ZDOTDIR=~/.dotfiles" >> ~/.zshenv
+    echo "export ZDOTDIR=~/.dotfiles/shell" >> ~/.zshenv
     ln -s $DOTFILES/shell ~/.dotfiles
     info "Created symlink to $(pwd) at ~/.dotfiles"
     success "Setup complete!"

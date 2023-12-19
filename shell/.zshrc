@@ -7,7 +7,7 @@ fi
 
 autoload -U compinit && compinit
 
-ZDIR=$HOME/.dotfiles/
+ZDIR=$HOME/.dotfiles/shell
 
 source $ZDIR/zplug
 source $ZDIR/history
