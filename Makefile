@@ -18,3 +18,6 @@ check-deps: ## This checks to make sure the various dependencies are installed, 
 
 install-deps: ## This will run through the various dependencies and install them if they are absent.
 	@zsh setup install_dependencies
+
+fix-file: ## Use this when running into CLF -> LF encoding issues:
+	find . -type f -print0 | xargs -0 dos2unix
