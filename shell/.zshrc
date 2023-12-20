@@ -7,7 +7,12 @@ fi
 
 autoload -U compinit && compinit
 
-ZDIR=$HOME/.dotfiles
+# Noticed Linux vs MacOS handles this differently
+if [[ "$(uname)" == "Darwin" ]]; then
+    ZDIR=$HOME/.dotfiles/shell
+elif [[ "$(uname)" == "Linux" ]]; then
+    ZDIR=$HOME/.dotfiles
+fi
 
 source $ZDIR/zplug
 source $ZDIR/exports
