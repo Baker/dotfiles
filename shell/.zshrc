@@ -17,7 +17,13 @@ fi
 source $ZDIR/zplug
 source $ZDIR/exports
 source $ZDIR/history
-source $ZDIR/work
+
+if [[ "$(uname)" == "Darwin" ]]; then
+    source $ZDIR/work
+elif [[ "$(uname)" == "Linux" ]]; then
+    source $ZDIR/personal
+fi
+
 source $ZDIR/aliases
 source $ZDIR/functions
 

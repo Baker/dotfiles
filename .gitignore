@@ -2,6 +2,7 @@
 *.log
 
 shell/work
+shell/personal
 backup
 dotfiles
 .zsh_history
