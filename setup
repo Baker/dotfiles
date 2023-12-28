@@ -65,7 +65,7 @@ mac() {
 }
 
 check_dependencies() {
-    local utils=(git curl pip python3 zsh rg fzf pnpm)
+    local utils=(git curl pip python3 zsh rg fzf pnpm swaks)
     local dir_utils=(nvm zplug)
     title "Checking for installed apps"
     for util in "${utils[@]}"; do
@@ -184,6 +184,15 @@ install_dependencies() {
         info "Installing zplug..."
         curl -sL --proto-redir -all,https https://raw.githubusercontent.com/zplug/installer/master/installer.zsh  >> $LOG_FILE | zsh >> $LOG_FILE
         success "zplug installed."
+    fi
+
+    if test $(command -v "swaks") ; then
+        success "swaks is already installed."
+    else
+        warning "swaks is not installed."
+        info "Installing swaks..."
+        install swaks >> $LOG_FILE
+        success "swaks installed."
     fi
 
     info "All logs are saved to $LOG_FILE"

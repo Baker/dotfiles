@@ -21,10 +21,7 @@ setup-shell                    This sets up the shell config by pointing the she
 
    ```shell
    ❯ make check-deps
-
    Checking for installed apps
-   ==============================
-
    Checking git... Installed.
    Checking curl... Installed.
    Checking pip... Installed.
@@ -32,6 +29,8 @@ setup-shell                    This sets up the shell config by pointing the she
    Checking zsh... Installed.
    Checking rg... Installed.
    Checking fzf... Installed.
+   Checking pnpm... Installed.
+   Checking swaks... Installed.
    Checking nvm... Installed.
    Checking zplug... Installed.
    ```
@@ -42,17 +41,18 @@ setup-shell                    This sets up the shell config by pointing the she
    ❯ make install-deps
 
    Installing dependencies
-   ==============================
-
-   Git is already installed.
-   curl is already installed.
-   nvm is already installed.
-   python is already installed.
-   pip is already installed.
-   zsh is already installed.
-   ripgrep is already installed.
-   fzf is already installed.
-   zplug is already installed.
+   SUCCESS:  Git is already installed.
+   SUCCESS:  curl is already installed.
+   SUCCESS:  nvm is already installed.
+   SUCCESS:  pnpm is already installed.
+   SUCCESS:  python is already installed.
+   SUCCESS:  pip is already installed.
+   SUCCESS:  zsh is already installed.
+   SUCCESS:  ripgrep is already installed.
+   SUCCESS:  fzf is already installed.
+   SUCCESS:  zplug is already installed.
+   SUCCESS:  swaks is already installed.
+   INFO: All logs are saved to /home/baker/projects/dotfiles/install.log
    ```
 
 3. Before installing my current configurations, I recommend making sure you backup what you have today. Run `make backup-shell`, this will store all your current zsh configurations in `$HOME/.dotfiles/backup`.
