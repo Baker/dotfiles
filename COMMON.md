@@ -19,3 +19,7 @@ This another common run I have run into strictly with Ubuntu WSL for some reason
 ```
 chmod u+x ./setup.sh
 ```
+
+### Broken Icons in ZSH
+
+This can happen on any OS, and can be solved by installing the [Meslo fonts](https://github.com/romkatv/powerlevel10k#meslo-nerd-font-patched-for-powerlevel10k).
