@@ -63,6 +63,11 @@ setup-shell                    This sets up the shell config by pointing the she
 
 I try and use the `Ayu` colors where I can. <https://github.com/ayu-theme/ayu-colors>
 
+| App Name | Theme Link                                                      |
+| -------- | --------------------------------------------------------------- |
+| Pycharm  | [Ayu Dark](https://plugins.jetbrains.com/plugin/22623-ayu-dark) |
+| Sublime  | [Ayu Dark](https://github.com/dempfi/ayu)                       |
+
 ## Issues
 
 I have an ongoing file with common issues I have encountered that I want to document for myself later. You can view these in the [COMMON.md](./COMMON.md).
