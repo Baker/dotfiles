@@ -1,5 +1,5 @@
 weather() {
-    curl "http://wttr.in/$1"
+    curl "http://wttr.in/$1?1"
 }
 
 cheat() {
