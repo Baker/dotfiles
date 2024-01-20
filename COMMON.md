@@ -19,3 +19,7 @@ This another common run I have run into strictly with Ubuntu WSL for some reason
 ```
 chmod u+x ./setup.sh
 ```
+
+### `parse error near`\n'`
+
+Try and run `make fix-file` since going between MacOS and Ubuntu sometimes encoding issues appear.
