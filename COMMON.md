@@ -2,6 +2,12 @@
 
 This is just a readme of the common quirks I have encountered while building out this project.
 
+## General
+
+### Icons are not rendering/showing as squares
+
+The solution is simple, probably easy to automate as well, might look into that, but for now: <https://github.com/romkatv/powerlevel10k/blob/master/font.md>
+
 ## Ubuntu
 
 ### Command not found: Make
