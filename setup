@@ -119,7 +119,7 @@ install_dependencies() {
         info "nvm installed, setting it up..."
         nvm ls-remote >> $LOG_FILE
         nvm install --lts >> $LOG_FILE
-        nvm use --lts >> $LOG_FILE
+        nvm alias default 'lts/*' >> $LOG_FILE
         success "nvm is installed and configured to use the latest LTS version."
     fi
 

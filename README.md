@@ -70,6 +70,7 @@ I try and use the `Ayu` colors where I can. <https://github.com/ayu-theme/ayu-co
 | Pycharm  | [Ayu Dark](https://plugins.jetbrains.com/plugin/22623-ayu-dark) |
 | Sublime  | [Ayu Dark](https://github.com/dempfi/ayu)                       |
 | iTerm 2 | [Ayu Dark](https://github.com/hwyncho/ayu-iTerm/blob/master/ayu%20Dark.itermcolors)|
+| Terminal | [Ayu Dark](https://github.com/hwyncho/ayu-Terminal-app) |
 
 ## Issues
 
