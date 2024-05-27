@@ -9,6 +9,10 @@ alias timer='echo "Timer started. Stop with CTRL-D." && date && time cat && date
 alias python=python3
 alias pip=pip3
 
+alias pv=pipenv
+alias pvi="pipenv install"
+alias pvu="pipenv uninstall"
+
 # Shortcuts
 bindkey ";5C" forward-word
 bindkey ";5D" backward-word
