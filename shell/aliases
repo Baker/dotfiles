@@ -14,5 +14,5 @@ alias pvi="pipenv install"
 alias pvu="pipenv uninstall"
 
 # Shortcuts
-bindkey ";5C" forward-word
-bindkey ";5D" backward-word
+bindkey "^[[1;5D" backward-word
+bindkey "^[[1;5C" forward-word
