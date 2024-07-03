@@ -6,3 +6,5 @@ shell/personal
 backup
 dotfiles
 .zsh_history
+.zsh_sessions
+.DS_Store

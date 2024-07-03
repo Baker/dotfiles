@@ -65,7 +65,7 @@ mac() {
 }
 
 check_dependencies() {
-    local utils=(git curl pip python3 zsh rg fzf pnpm swaks)
+    local utils=(git curl pip python3 pipx zsh rg fzf pnpm swaks)
     local dir_utils=(nvm zplug)
     title "Checking for installed apps"
     for util in "${utils[@]}"; do
@@ -119,7 +119,7 @@ install_dependencies() {
         info "nvm installed, setting it up..."
         nvm ls-remote >> $LOG_FILE
         nvm install --lts >> $LOG_FILE
-        nvm use --lts >> $LOG_FILE
+        nvm alias default 'lts/*' >> $LOG_FILE
         success "nvm is installed and configured to use the latest LTS version."
     fi
 
@@ -148,6 +148,17 @@ install_dependencies() {
         info "Installing pip..."
         linux python3-pip
         success "pip installed."
+    fi
+
+    if test "$(command -v "pipx")"; then
+        success "pipx is already installed."
+    else
+        warning "pipx is not installed."
+        info "Installing pipx..."
+        install pipx
+        pipx ensurepath
+        # sudo pipx ensurepath --global # optional to allow pipx actions with --global argument
+        success "pipx installed."
     fi
 
     if test "$(command -v "zsh")"; then
