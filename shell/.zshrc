@@ -7,22 +7,19 @@ fi
 
 autoload -U compinit && compinit
 
-# Noticed Linux vs MacOS handles this differently
+# Platform-specific configuration
 if [[ "$(uname)" == "Darwin" ]]; then
     ZDIR=$HOME/.dotfiles/shell
-elif [[ "$(uname)" == "Linux" ]]; then
+    PLATFORM_CONFIG=$ZDIR/work
+else
     ZDIR=$HOME/.dotfiles
+    PLATFORM_CONFIG=$ZDIR/personal
 fi
 
 source $ZDIR/zplug
 source $ZDIR/exports
 source $ZDIR/history
-
-if [[ "$(uname)" == "Darwin" ]]; then
-    source $ZDIR/work
-elif [[ "$(uname)" == "Linux" ]]; then
-    source $ZDIR/personal
-fi
+[[ -f $PLATFORM_CONFIG ]] && source $PLATFORM_CONFIG
 
 source $ZDIR/aliases
 source $ZDIR/functions

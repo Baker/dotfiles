@@ -5,14 +5,11 @@ alias ..="cd .."
 alias week='date +%V'
 alias timer='echo "Timer started. Stop with CTRL-D." && date && time cat && date'
 
-# Generic aliases
+# Python
 alias python=python3
 alias pip=pip3
 
+# Pipenv
 alias pv=pipenv
 alias pvi="pipenv install"
 alias pvu="pipenv uninstall"
-
-# Shortcuts
-bindkey "^[[1;5D" backward-word
-bindkey "^[[1;5C" forward-word

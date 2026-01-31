@@ -11,31 +11,31 @@ COLOR_NONE="\033[0m"
 newline=$'\n'
 
 title() {
-    echo "${COLOR_PURPLE}$1${COLOR_NONE}"
+    printf '%b\n' "${COLOR_PURPLE}$1${COLOR_NONE}"
 }
 
 error() {
-    echo "${COLOR_RED}ERROR: ${COLOR_NONE}$1"
+    printf '%b\n' "${COLOR_RED}ERROR: ${COLOR_NONE}$1"
 }
 
 success() {
-    echo "${COLOR_GREEN}SUCCESS: ${COLOR_NONE} $1"
+    printf '%b\n' "${COLOR_GREEN}SUCCESS: ${COLOR_NONE} $1"
 }
 
 warning() {
-    echo "${COLOR_YELLOW}WARNING: ${COLOR_NONE}$1"
+    printf '%b\n' "${COLOR_YELLOW}WARNING: ${COLOR_NONE}$1"
 }
 
 info() {
-    echo "${COLOR_BLUE}INFO: ${COLOR_NONE}$1"
+    printf '%b\n' "${COLOR_BLUE}INFO: ${COLOR_NONE}$1"
 }
 
 error_message() {
-    echo "${COLOR_RED}$1${COLOR_NONE}"
+    printf '%b\n' "${COLOR_RED}$1${COLOR_NONE}"
 }
 
 success_message() {
-    echo "${COLOR_GREEN}$1${COLOR_NONE}"
+    printf '%b\n' "${COLOR_GREEN}$1${COLOR_NONE}"
 }
 
 install() {
@@ -115,7 +115,7 @@ install_dependencies() {
     else
         warning "nvm is not installed."
         info "Installing nvm..."
-        curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh >> $LOG_FILE | bash >> $LOG_FILE
+        curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash >> $LOG_FILE 2>&1
         info "nvm installed, setting it up..."
         nvm ls-remote >> $LOG_FILE
         nvm install --lts >> $LOG_FILE
@@ -193,7 +193,7 @@ install_dependencies() {
     else
         warning "zplug is not installed."
         info "Installing zplug..."
-        curl -sL --proto-redir -all,https https://raw.githubusercontent.com/zplug/installer/master/installer.zsh  >> $LOG_FILE | zsh >> $LOG_FILE
+        curl -sL --proto-redir -all,https https://raw.githubusercontent.com/zplug/installer/master/installer.zsh | zsh >> $LOG_FILE 2>&1
         success "zplug installed."
     fi
 
@@ -216,10 +216,10 @@ backup_shell() {
     info "Creating backup directory at $BACKUP_DIR"
     mkdir -p "$BACKUP_DIR"
     info "Attempting to backup existing zsh config files"
-    mv ~/.zshrc "$BACKUP_DIR/.zshrc.backup"
-    mv ~/.zshenv "$BACKUP_DIR/.zshenv.backup"
-    mv ~/.zprofile "$BACKUP_DIR/.zprofile.backup"
-    mv ~/.zlogin "$BACKUP_DIR/.zlogin.backup"
+    [ -f ~/.zshrc ] && mv ~/.zshrc "$BACKUP_DIR/.zshrc.backup"
+    [ -f ~/.zshenv ] && mv ~/.zshenv "$BACKUP_DIR/.zshenv.backup"
+    [ -f ~/.zprofile ] && mv ~/.zprofile "$BACKUP_DIR/.zprofile.backup"
+    [ -f ~/.zlogin ] && mv ~/.zlogin "$BACKUP_DIR/.zlogin.backup"
     success "Backup complete!"
 }
 

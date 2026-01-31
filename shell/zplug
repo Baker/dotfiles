@@ -23,12 +23,12 @@ zplug "plugins/ripgrep", from:oh-my-zsh
 zplug "plugins/history", from:oh-my-zsh
 zplug "plugins/copyfile", from:oh-my-zsh
 
-# oh-my-zsh infrastrucutre plugins
+# oh-my-zsh infrastructure plugins
 zplug "plugins/git", from:oh-my-zsh
 zplug "plugins/docker", from:oh-my-zsh
 zplug "plugins/kubectl", from:oh-my-zsh
 
-# oh-my-zsh langauge plugins
+# oh-my-zsh language plugins
 zplug "plugins/pip", from:oh-my-zsh
 zplug "plugins/pipenv", from:oh-my-zsh
 zplug "plugins/python", from:oh-my-zsh
@@ -38,11 +38,12 @@ zplug "plugins/nvm", from:oh-my-zsh
 
 
 # Deferred plugins
-zplug "zsh-users/zsh-autosuggestions", defer:2
+zplug "zsh-users/e", defer:2
 zplug "zsh-users/zsh-syntax-highlighting", defer:2
 zplug "zsh-users/zsh-history-substring-search", defer:2
 
-zplug load
-if ! zplug check; then
+# Install missing plugins before loading
+if ! zplug check --verbose; then
     zplug install
 fi
+zplug load
