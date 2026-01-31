@@ -45,16 +45,16 @@ install() {
     elif [ "$(uname)" = "Linux" ]; then
         info "Linux detected"
         if [ -n "$2" ]; then
-            sudo apt install "$2" >> $LOG_FILE
+            sudo apt install -y "$2" >> $LOG_FILE
         else
-            sudo apt install "$1" >> $LOG_FILE
+            sudo apt install -y "$1" >> $LOG_FILE
         fi
     fi
 }
 
 linux() {
     if [ "$(uname)" = "Linux" ]; then
-        sudo apt install $1 >> $LOG_FILE
+        sudo apt install -y $1 >> $LOG_FILE
     fi
 }
 
