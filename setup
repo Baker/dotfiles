@@ -65,7 +65,7 @@ mac() {
 }
 
 check_dependencies() {
-    local utils=(git curl pip python3 pipx zsh rg fzf npm pnpm swaks)
+    local utils=(git curl pip python3 pipx zsh go rg fzf npm pnpm swaks)
     local dir_utils=(nvm zplug)
     title "Checking for installed apps"
     for util in "${utils[@]}"; do
@@ -189,6 +189,15 @@ install_dependencies() {
         success "zsh installed."
     fi
 
+    if test "$(command -v "go")"; then
+        success "Go is already installed."
+    else
+        warning "Go is not installed."
+        info "Installing Go..."
+        install go golang-go
+        success "Go installed."
+    fi
+
     if test "$(command -v "rg")"; then
         success "ripgrep is already installed."
     else
@@ -260,8 +269,23 @@ setup_shell() {
         ln -s "$SHELL_DIR" "$HOME/.dotfiles"
         info "Created symlink ~/.dotfiles -> $SHELL_DIR"
     fi
+
+    # Set zsh as default shell if not already
+    ZSH_PATH="$(command -v zsh)"
+    CURRENT_SHELL="$(getent passwd "$(whoami)" | cut -d: -f7)"
+    if [ -n "$ZSH_PATH" ] && [ "$CURRENT_SHELL" != "$ZSH_PATH" ]; then
+        info "Setting zsh as default shell (you may be prompted for your password)..."
+        if chsh -s "$ZSH_PATH"; then
+            success "Default shell set to zsh. Open a new terminal for it to take effect."
+        else
+            warning "Could not set default shell. Run manually: chsh -s $(command -v zsh)"
+        fi
+    elif [ "$CURRENT_SHELL" = "$ZSH_PATH" ]; then
+        info "zsh is already your default shell."
+    fi
+
     success "Setup complete!"
-    info "Run \`zsh\` or open a new terminal (with zsh as default) to see your new prompt and theme."
+    info "Open a new terminal to see your new prompt and theme."
 }
 
 remove_shell() {
