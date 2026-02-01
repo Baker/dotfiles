@@ -38,7 +38,6 @@ zplug "plugins/nvm", from:oh-my-zsh
 
 
 # Deferred plugins
-zplug "zsh-users/e", defer:2
 zplug "zsh-users/zsh-syntax-highlighting", defer:2
 zplug "zsh-users/zsh-history-substring-search", defer:2
 

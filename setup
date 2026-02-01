@@ -65,7 +65,7 @@ mac() {
 }
 
 check_dependencies() {
-    local utils=(git curl pip python3 pipx zsh rg fzf pnpm swaks)
+    local utils=(git curl pip python3 pipx zsh rg fzf npm pnpm swaks)
     local dir_utils=(nvm zplug)
     title "Checking for installed apps"
     for util in "${utils[@]}"; do
@@ -121,6 +121,25 @@ install_dependencies() {
         nvm install --lts >> $LOG_FILE
         nvm alias default 'lts/*' >> $LOG_FILE
         success "nvm is installed and configured to use the latest LTS version."
+    fi
+
+    # Load nvm so npm is available in this script
+    if [ -s "$HOME/.nvm/nvm.sh" ]; then
+        . "$HOME/.nvm/nvm.sh"
+    fi
+
+    if test "$(command -v "npm")"; then
+        success "npm is already installed."
+    else
+        warning "npm is not installed (install nvm/node first)."
+        if [ -s "$HOME/.nvm/nvm.sh" ]; then
+            . "$HOME/.nvm/nvm.sh" && nvm install --lts >> $LOG_FILE 2>&1
+            success "npm installed via nvm."
+        else
+            info "Installing nodejs and npm..."
+            install npm
+            success "npm installed."
+        fi
     fi
 
     if test "$(command -v "pnpm")"; then
@@ -225,11 +244,24 @@ backup_shell() {
 
 setup_shell() {
     title "Setting up Shell.."
-    touch ~/.zshenv
-    echo "export ZDOTDIR=~/.dotfiles/shell" >> ~/.zshenv
-    ln -s $DOTFILES/shell ~/.dotfiles
-    info "Created symlink to $(pwd) at ~/.dotfiles"
+    SHELL_DIR="$DOTFILES/shell"
+    printf '%s\n' "export ZDOTDIR=~/.dotfiles" > ~/.zshenv
+    if [ -L "$HOME/.dotfiles" ]; then
+        if [ "$(readlink -f "$HOME/.dotfiles")" = "$(readlink -f "$SHELL_DIR")" ]; then
+            info "Symlink ~/.dotfiles already points to shell directory."
+        else
+            rm -f "$HOME/.dotfiles"
+            ln -s "$SHELL_DIR" "$HOME/.dotfiles"
+            info "Updated symlink ~/.dotfiles to point to shell directory."
+        fi
+    elif [ -e "$HOME/.dotfiles" ]; then
+        warning "~/.dotfiles already exists and is not a symlink. Remove it and run setup again, or run: ln -sf $SHELL_DIR ~/.dotfiles"
+    else
+        ln -s "$SHELL_DIR" "$HOME/.dotfiles"
+        info "Created symlink ~/.dotfiles -> $SHELL_DIR"
+    fi
     success "Setup complete!"
+    info "Run \`zsh\` or open a new terminal (with zsh as default) to see your new prompt and theme."
 }
 
 remove_shell() {
