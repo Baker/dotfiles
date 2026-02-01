@@ -1,9 +1,6 @@
 .PHONY: help
 .DEFAULT_GOAL := help
 
-# Force Make to use /bin/sh (avoids SHELL=go or other env from breaking $(shell ...))
-SHELL := /bin/sh
-
 # Use zsh if installed, otherwise fall back to bash
 SH := $(or $(shell command -v zsh 2>/dev/null),$(shell command -v bash 2>/dev/null),bash)
 
