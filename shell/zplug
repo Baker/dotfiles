@@ -11,7 +11,7 @@ zplug "zsh-users/zsh-completions"
 zplug "b4b4r07/enhancd", use:init.sh
 
 #MacOS
-if [[ "$(uname)" == "Darwin" ]]; then
+if [[ "$PLATFORM" == "Darwin" ]]; then
     zplug "plugins/macos", from:oh-my-zsh
 fi
 
@@ -42,7 +42,7 @@ zplug "zsh-users/zsh-syntax-highlighting", defer:2
 zplug "zsh-users/zsh-history-substring-search", defer:2
 
 # Install missing plugins before loading
-if ! zplug check --verbose; then
+if ! zplug check; then
     zplug install
 fi
 zplug load

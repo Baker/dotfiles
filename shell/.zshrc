@@ -8,7 +8,8 @@ fi
 autoload -U compinit && compinit
 
 # Platform-specific configuration
-if [[ "$(uname)" == "Darwin" ]]; then
+PLATFORM="$(uname)"
+if [[ "$PLATFORM" == "Darwin" ]]; then
     ZDIR=$HOME/.dotfiles/shell
     PLATFORM_CONFIG=$ZDIR/work
 else
