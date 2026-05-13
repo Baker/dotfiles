@@ -5,7 +5,12 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
-autoload -U compinit && compinit
+autoload -U compinit
+if [[ -n ${ZDOTDIR:-$HOME}/.zcompdump(#qN.mh+24) ]]; then
+  compinit
+else
+  compinit -C
+fi
 
 # Platform-specific configuration
 PLATFORM="$(uname)"
@@ -27,3 +32,6 @@ source $ZDIR/functions
 
 # To customize prompt, run `p10k configure` or edit $ZDIR/.p10k.zsh.
 [[ ! -f $ZDIR/.p10k.zsh ]] || source $ZDIR/.p10k.zsh
+
+# bun completions
+[ -s "$HOME/.bun/_bun" ] && source "$HOME/.bun/_bun"

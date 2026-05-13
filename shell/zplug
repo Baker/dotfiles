@@ -25,8 +25,8 @@ zplug "plugins/copyfile", from:oh-my-zsh
 
 # oh-my-zsh infrastructure plugins
 zplug "plugins/git", from:oh-my-zsh
-zplug "plugins/docker", from:oh-my-zsh
-zplug "plugins/kubectl", from:oh-my-zsh
+zplug "plugins/docker", from:oh-my-zsh, defer:2
+zplug "plugins/kubectl", from:oh-my-zsh, defer:2
 
 # oh-my-zsh language plugins
 zplug "plugins/pip", from:oh-my-zsh
@@ -34,7 +34,7 @@ zplug "plugins/pipenv", from:oh-my-zsh
 zplug "plugins/python", from:oh-my-zsh
 zplug "plugins/virtualenv", from:oh-my-zsh
 zplug "plugins/virtualenvwrapper", from:oh-my-zsh
-zplug "plugins/nvm", from:oh-my-zsh
+zplug "plugins/nvm", from:oh-my-zsh, defer:3
 
 
 # Deferred plugins

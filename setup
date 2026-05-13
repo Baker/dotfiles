@@ -65,7 +65,7 @@ mac() {
 }
 
 check_dependencies() {
-    local utils=(git curl pip python3 pipx zsh go rg fzf npm pnpm swaks)
+    local utils=(git curl pip python3 pipx zsh go rg fzf npm pnpm unzip bun swaks claude skillshare)
     local dir_utils=(nvm zplug)
     title "Checking for installed apps"
     for util in "${utils[@]}"; do
@@ -151,6 +151,24 @@ install_dependencies() {
         success "pnpm installed."
     fi
 
+    if test "$(command -v "unzip")"; then
+        success "unzip is already installed."
+    else
+        warning "unzip is not installed (required for bun)."
+        info "Installing unzip..."
+        install unzip
+        success "unzip installed."
+    fi
+
+    if test "$(command -v "bun")"; then
+        success "bun is already installed."
+    else
+        warning "bun is not installed."
+        info "Installing bun..."
+        curl -fsSL https://bun.sh/install | bash >> $LOG_FILE 2>&1
+        success "bun installed."
+    fi
+
     if test "$(command -v "python3")"; then
         success "python is already installed."
     else
@@ -232,6 +250,36 @@ install_dependencies() {
         info "Installing swaks..."
         install swaks >> $LOG_FILE
         success "swaks installed."
+    fi
+
+    if test "$(command -v "claude")"; then
+        success "claude is already installed."
+    else
+        warning "claude is not installed."
+        info "Installing Claude (Claude Code)..."
+        if npm install -g @anthropic-ai/claude-code >> $LOG_FILE 2>&1; then
+            success "claude installed."
+        else
+            warning "claude install failed — check $LOG_FILE"
+        fi
+    fi
+
+    if test "$(command -v "skillshare")"; then
+        success "skillshare is already installed."
+    else
+        warning "skillshare is not installed."
+        info "Installing skillshare..."
+        ok=0
+        if [ "$(uname)" = "Darwin" ]; then
+            install skillshare && ok=1
+        else
+            curl -fsSL https://raw.githubusercontent.com/runkids/skillshare/main/install.sh | sh >> $LOG_FILE 2>&1 && ok=1
+        fi
+        if [ "$ok" = 1 ]; then
+            success "skillshare installed."
+        else
+            warning "skillshare install failed — check $LOG_FILE"
+        fi
     fi
 
     info "All logs are saved to $LOG_FILE"
